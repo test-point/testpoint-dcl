@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% load static from staticfiles %}
+
+{% block diagram_content %}
+  <p>B2B frameworks may leverage multiple providers of identity with varying degrees of identity confidence, The higher the identity integrity, the lower the rist associated with B2B transactions and the lower the cost of services such as trade financing. This test service simulates various OIDC providers and scopes.</p>
+  <div class="diagram-image">
+    <img src="{% static 'images/diagrams/test-dcl.png' %}" class="visible-desktop" alt="">
+    <img src="{% static 'images/diagrams/test-dcl-mobile.png' %}" class="visible-mobile" alt="">
+  </div>
+{% endblock %}
+
+{% block body_title %}<h2>DIGITAL CAPABILITY LOCATOR</h2>{% endblock %}
+
+{% block tabs_content %}
+  <div class="tabs">
+    <ul class="tabs-header">
+      <li><a href="#home-tabs-query">Query</a></li>
+      <li><a href="#home-tabs-management">Update</a></li>
+    </ul>
+    <div class="tabs-container">
+      <div id="home-tabs-query" class="tabs-content">
+        <h3 id="query">Query API</h3>
+        <p>
+	  ADBC published a <a href="https://github.com/ausdigital/adbc/raw/master/Digital_Capability_Locator_Implementation_Guide_v1.0.pdf">DCL Implementation Guide</a> with query API and management API parts. The Testpoint DCL implementation complies with the query API.
+	</p>
+	<p>
+	  Submit well formed NAPTR queries to DNS at *.dcl.testpoint.io
+	</p>
+      </div>
+      
+      <div id="home-tabs-management" class="tabs-content">
+        <h3 id="management">Management API</h3>
+        <p>
+          ADBC published a <a href="https://github.com/ausdigital/adbc/raw/master/Digital_Capability_Locator_Implementation_Guide_v1.0.pdf">DCL Implementation Guide</a> with query API and management API parts. The Testpoint DCL implemetation does not yet comply with the proposed Management API, however a simplified management interface is provides which is adequate for many testing and development purposes.
+        </p>
+	<p>
+	  To use the simplified management interface:
+	  <ol>
+	    <li>Click the "Login with idp.testpoint.io" link at the top right of the page.</li>
+	    <li>Then select the "Update SMP" link at the top right of the page.</li>
+	    <li>Then fill in the form and click "submit".</li>
+	  </ol>
+	  This requires that you log in with ABN credentials that have been configured with the <a href="http://idp.testpoint.io/">Testpoint IDP</a>
+	</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

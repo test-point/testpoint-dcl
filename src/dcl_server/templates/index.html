@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% load static from staticfiles %}
+
+{% block diagram_content %}
+  <p>B2B frameworks may leverage multiple providers of identity with varying degrees of identity confidence, The higher the identity integrity, the lower the rist associated with B2B transactions and the lower the cost of services such as trade financing. This test service simulates various OIDC providers and scopes.</p>
+  <div class="diagram-image">
+    <img src="{% static 'images/diagrams/test-dcl.png' %}" class="visible-desktop" alt="">
+    <img src="{% static 'images/diagrams/test-dcl-mobile.png' %}" class="visible-mobile" alt="">
+  </div>
+{% endblock %}
+
+{% block body_title %}<h2>DIGITAL CAPABILITY LOCATOR</h2>{% endblock %}
+
+{% block tabs_content %}
+  <div class="tabs">
+    <ul class="tabs-header">
+      <li><a href="#home-tabs-foss">Free Software</a></li>
+      <li><a href="#home-tabs-query">Query API</a></li>
+      <li><a href="#home-tabs-management">Update API</a></li>
+    </ul>
+    <div class="tabs-container">
+      <div id="home-tabs-foss" class="tabs-content">
+	<h3 id="foss">Free Software</h3>
+	<p>
+	  dcl.testpoint.io is both a free service and a reference implementation of a Digital Capability Locator service (per <a href="https://capability-locator.readthedocs.io/">DCL-SPEC</a>).
+	</p>
+	<p>
+	  The reference implementation is Free Open-Source Software (FOSS).
+	  Source code is published in <a href="https://github.com/test-point/dcl.testpoint.io/">GitHub</a>, and support is available through the <a href="//ausdigital.org/">AusDigital</a> community site. 
+	</p>
+	<p>
+	  The implementation is supported by an <a href="https://github.com/test-point/test-capability-locator/">automated test suite</a> which can be used to verify any DCL implementation.
+	  The test suite is also FOSS, and demonstrates client-side code for accessing a DCL.
+	</p>
+      </div>
+
+      <div id="home-tabs-query" class="tabs-content">
+        <h3 id="query">Query API</h3>
+        <p>
+	  The reference implementation complies with the <a href="http://capability-locator.readthedocs.io/todo-sublink-fixme">DCL specification Query API</a>.
+	</p>
+	<p>
+	  The <a href="https://capability-locator.readthedocs.io/todo-sublink-normative-eg">normative example</a> in the DCL-SPEC uses the dcl.testpoint.io free service to demonstrate the Query API in detail.
+	  Basically, this means a well formed NAPTR type  DNS query to the *.dcl.testpoint.io domain will return a CNAME of a service metadata publisher.
+	</p>
+      </div>
+      
+      <div id="home-tabs-management" class="tabs-content">
+        <h3 id="management">Management API</h3>
+        <p>
+          The full DCL Management API is a work in progress. Please contribute to discussions about Management API design in the <a href="http://ausdigital.org/">AusDigital</a> community site, especially the <a href="https://github.com/ausdigital/capability-locator/issues">GitHub issues</a> to identify your Management API needs.
+	</p>
+	<p>
+	  The dcl.testpoint.io reference implementation (and free service) provides a simplified management interface that is adequate for many testing and development purposes.
+        </p>
+	<p>
+	  To use the simplified management interface:
+	  <ol>
+	    <li>Click the "Login with idp.testpoint.io" link at the top right of the page.</li>
+	    <li>Then select the "Update SMP" link at the top right of the page.</li>
+	    <li>Then fill in the form and click "submit".</li>
+	  </ol>
+	  This requires that you log in with ABN credentials that have been configured with the <a href="http://idp.testpoint.io/">Testpoint IDP</a>.
+	</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}

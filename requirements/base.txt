@@ -1,0 +1,21 @@
+# Core
+# requirements don't frozen because we don't have any particular preference,
+# and django frozen just in case. Zappa deployments won't make remote pip install,
+# so it's safe to assume that developer will see most of the incompatibilities
+# locally
+Django>=1.10,<1.11
+raven
+django-braces
+django-crispy-forms
+
+# openid connect
+git+https://github.com/koriaf/pyoidc.git
+git+https://github.com/koriaf/django-oidc.git
+
+# Settings and deployment
+envparse
+django-storages
+zappa
+boto
+
+psycopg2

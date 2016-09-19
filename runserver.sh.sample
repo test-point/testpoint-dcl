@@ -1,0 +1,2 @@
+#!/bin/bash
+./manage.sh runserver 127.0.0.1:5200

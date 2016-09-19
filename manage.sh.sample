@@ -1,0 +1,37 @@
+#!/bin/bash
+# for more settings check src/dcl_server/settings/*.py
+
+export DCL_DEBUG="True"
+export DCL_SECRET_KEY="notsosecret"
+
+# Postgres database
+# export DCL_DB_NAME="dcl"
+# export DCL_DB_HOST="some-postgres-hostname"
+# export DCL_DB_USERNAME="dcl_username"
+# export DCL_DB_PASSWORD="dcl_password"
+
+# sqlite database
+export DCL_DB_ENGINE="django.db.backends.sqlite3"
+export DCL_DB_NAME="dcl.sqlite"
+
+# uncomment it for collectstatic, so it can copy your data into the given S3 bucket
+# export DCL_STATICFILES_STORAGE="storages.backends.s3boto.S3BotoStorage"
+# export DCL_AWS_STORAGE_BUCKET_NAME="zappa-dcl-installation-static"
+
+# naptr user, used to call the Route53 api. Should be IAM user with just Route54 access
+# (but you can use your global iam credentials for debug - just don't leak them)
+export DCL_ROUTE_53_IAM_ACCESS_KEY="AKIAEEEEEEEEEEEQQQQQ"
+export DCL_ROUTE_53_IAM_ACCESS_SECRET="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+
+# the values you shall get from your OIDC provider (try our idp.testpoint.io)
+export DCL_SIMGUARD_HOSTNAME="https://idp.testpoint.io"
+export DCL_SIMGUARD_CLIENT_ID="99999"
+export DCL_SIMGUARD_CLIENT_SECRET="eeeeeeeeeeeeeeeeeeeeeeeeeee"
+
+export DCL_ROUTE53_ZONE_ID="OYEEEEEROUTEDO"
+
+# not required while you are using DEBUG=True; but some static assets handling might be needed otherwise
+# use the standard Django approach
+# export DCL_STATIC_URL="https://unreadabledomain.cloudfront.net/"
+
+./venv.sh ./src/manage.py $@

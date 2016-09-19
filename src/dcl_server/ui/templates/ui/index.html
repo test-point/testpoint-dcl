@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static from staticfiles %}
+{% load i18n %}
+{% block head_title %}Update your DCP{% endblock %}
+
+{% block body_title %}{% endblock %}
+
+{% block diagram %}
+  <section class="diagram" style='height: 100px'>
+  </section>
+{% endblock %}
+
+{% block tabs_content %}
+  <form method="POST" action="#" style='padding: 20px;'>
+    {% csrf_token %}
+    <p>Here you can change your DCP to any domain name. Please consult your Digital Capability Provider and Service Metadata Publisher for correct value.</p>
+    <p>To test the newly created/updated item, please do:
+    <pre>host -t naptr b-{{ participant_hash|lower }}.dcl.testpoint.io. ns-1541.awsdns-00.co.uk</pre>
+    or <br/>
+    <pre>host -t naptr b-{{ participant_hash|lower }}.dcl.testpoint.io. 8.8.8.8</pre>
+    Expected result:
+    <pre>b-{{ participant_hash|lower }}.dcl.testpoint.io has NAPTR record 10 100 "S" "" "" your-entered-domain.</pre>
+    By default all known participant IDS and reffer to smp.testpoint.io. It may take up to 5 minutes (rare cases - up to 30) for all changes to propagate to all our DNS servers. Usually it's less than a minute. It may take up to 24 hours to propagate to DNS servers around the world, and 3rd party DNS servers may cache this value - that's why we use custom DNS server in this demo requests.
+    </p>
+    <div class="form-group">
+      <label for="id_new_smp_value" class="control-label">New SMP Value</label>
+      <div>
+        <input id="id_new_smp_value" type="text" name="new_smp_value" class="form-control" value="smp.testpoint.io" style='color: black;'>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button class="btn" type="submit">Submit</button>
+    </div>
+  </form>
+{% endblock %}

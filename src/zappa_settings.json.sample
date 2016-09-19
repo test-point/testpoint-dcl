@@ -1,0 +1,16 @@
+{
+    "dev": {
+        "project_name": "dcl.testpoint",
+        "django_settings": "dcl_server.settings",
+        "s3_bucket": "zappa-stage-dcl-testpoint-io",
+        "delete_zip": true,
+        "domain": "dcl.testpoint.io",
+        "lets_encrypt_key": "s3://zappa-stage-dcl-testpoint-io/dcl.testpoint.io.key",
+        "http_methods": ["GET", "POST", "PUT", "OPTIONS"],
+        "aws_region": "ap-southeast-2",
+        "remote_env_bucket": "zappa-stage-dcl-testpoint-io",
+        "remote_env_file": "dcl.testpoint.env.json",
+        "exclude": ["static", "var"],
+        "log_level": "DEBUG",
+    }
+}
