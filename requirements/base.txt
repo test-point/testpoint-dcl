@@ -9,8 +9,8 @@ django-braces
 django-crispy-forms
 
 # openid connect
-git+https://github.com/koriaf/pyoidc.git
-git+https://github.com/koriaf/django-oidc.git
+git+https://github.com/test-point/pyoidc.git
+git+https://github.com/test-point/django-oidc.git
 
 # Settings and deployment
 envparse
