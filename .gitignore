@@ -5,3 +5,4 @@ runserver.sh
 src/deploy.sh
 .venv/
 src/zappa_settings.json
+var/
