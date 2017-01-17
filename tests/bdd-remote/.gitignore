@@ -1,0 +1,10 @@
+# general stuff we don't want to commit
+*~
+*.pyc
+
+# non-committables related to test.sh
+config.sh
+.venv/
+ghostdriver.log
+var/
+.cache/

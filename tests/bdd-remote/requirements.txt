@@ -1,0 +1,21 @@
+#
+# list of python packages required to run the test suite
+#
+
+# for configuring fixtures via the environment
+envparse
+
+pytest
+pytest-spec
+# pytest-json
+pytest-bdd
+pytest-splinter
+# TODO: use both
+# mock
+# factory-boy
+
+# for the discovery_api lookups
+dnspython
+
+# for management API test
+#xmltodict
