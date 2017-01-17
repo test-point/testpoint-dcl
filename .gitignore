@@ -1,15 +1,3 @@
-manage.sh
-zappa.sh
-
-*~
-manage.sh
-runserver.sh
-src/deploy.sh
-.venv/
-src/zappa_settings.json
-var/
-*.sqlite
-
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
