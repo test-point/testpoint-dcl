@@ -1,10 +1,11 @@
 # DCL server
+
 Our implementation of a DNS based capability lookup. The central directory.
 
 
 ## About
 
-This is a HTTP server providing ability to update your NAPTR record in configurable backends (AWS Route53 currently implemented). It's designed to be run behind an HTTPS reverse proxy.
+This is a Web Service providing ability to update your NAPTR record in configurable backends (AWS Route53 currently implemented). It's designed to be run behind an HTTPS reverse proxy.
 
 Provided with a target hostname, it sets standard record for given participant ID.
 
@@ -16,7 +17,7 @@ Assumed that participant_id is beling provided by some trusted IdentityProvider.
 These are steps to start local installation of DCL provider or put it somewhere for wide access.
 
 You need some external resources to get it working:
-* identity provider - the simplest case is to use idp.testpoint.io, create your own RP and add some synthetic ABN users. All details may be found on it's website.
+* identity provider - the simplest case is to use idp.testpoint.io, create your own RP and add some synthetic ABN users. All details may be found there.
 * AWS credentials. You need api key and secret for some IAM user with access to target Route53 hosted zone. You may use your own user/root credentials, but only locally please and for initial testing and try not to spoil it. Before deploying your project somewhere please make such user.
 
 
@@ -74,5 +75,4 @@ Our reference service [https://dcl.testpoint.io](https://dcl.testpoint.io) is pu
 
 ## Support
 
-Please raise problems, issues or suggestions as tickets at GitHub, or talk to us at the AusDigital community site (https://talk.ausdigital.org/)
-
+Please raise problems, issues or suggestions as tickets at GitHub, or talk to us at the AusDigital community site (https://ausdigital.org/)
