@@ -24,7 +24,7 @@
         <nav id="main-nav">
           <ul>
             {% if user.is_authenticated %}
-              <li><a href="{% url 'ui:index' %}">Update SMP</a></li>
+              <li><a href="{% url 'ui:index' %}">Update DCP</a></li>
               {% spaceless %}<li><a href="/openid/logout/">
                 Logout ({% if request.session.userinfo.abn %}{{ request.session.userinfo.abn }}{% else %}{{ user }}{% endif %})
               </a></li>{% endspaceless %}
@@ -36,11 +36,11 @@
               <label for="dropdown" class="has-dropdown">Services</label>
               <input type="checkbox" id="dropdown"/>
               <ul class="subemnu" style=>
-                <li><a href="http://testpoint.io/lap.html">Test AP</a></li>
-                <li><a href="http://testpoint.io/nry.html">Test NRY</a></li>
+                <li><a href="http://testpoint.io/">Test AP</a></li>
+                <li><a href="http://testpoint.io/">Test NRY</a></li>
                 <li><a href="https://idp.testpoint.io/">Test IDP</a></li>
                 <li><a href="https://dcl.testpoint.io">Test DCL</a></li>
-                <li><a href="https://smp.testpoint.io/">Test SMP</a></li>
+                <li><a href="https://dcp.testpoint.io/">Test DCP</a></li>
               </ul>
             </li>
           </ul>
@@ -94,7 +94,7 @@
       <li><a href="http://ausdigital.org/">Ausdigital</a></li>
       <li><a href="https://github.com/ausdigital/">Github</a></li>
       <li><a href="mailto:hi@ausdigital.org">hi@ausdigital.org</a></li>
-      <li><a href="https://talk.ausdigital.org">Chat</a></li>
+      <li><a href="https://chat.ausdigital.org">Chat</a></li>
     </ul>
     <p class="copyright">Copyright &copy; 2016. All rights reserved</p>
   </footer>

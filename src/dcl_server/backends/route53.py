@@ -30,7 +30,7 @@ class DnsBackend(object):
 
     To test random record:
         $ host -t naptr b-a8bed6634b24fe2ae8045bf3ded8e2f0.dcl.testpoint.io. ns-1541.awsdns-00.co.uk
-        b-a8bed6634b24fe2ae8045bf3ded8e2f0.dcl.testpoint.io has NAPTR record 10 100 "S" "" "" stage.smp.testpoint.io.
+        b-a8bed6634b24fe2ae8045bf3ded8e2f0.dcl.testpoint.io has NAPTR record 10 100 "S" "" "" dcp.testpoint.io.
 
     """
 
@@ -71,7 +71,7 @@ class DnsBackend(object):
             * participant_id: '{scheme}::{value}'
               example: "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::60887492061"
             * new_smp_hostname: domain of Service Metadata Publisher host
-              example: smp.testpoint.io, stage.smp.testpoint.io
+              example: dcp.testpoint.io, stage.dcp.testpoint.io
         Return value: unspecificed
         Raises:
             * DclBackendValidationError if input data is wrong, but generally assumes that
