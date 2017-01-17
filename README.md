@@ -1,4 +1,4 @@
-# Digital Capability Locator reference implementation and test suite
+# The Ausdigital Digital Capability Locator reference implementation and test suite
 
 See specification at https://github.com/ausdigital/ausdigital-dcl
 
