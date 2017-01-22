@@ -19,6 +19,8 @@ OIDC_DEFAULT_BEHAVIOUR = {
     "scope": ["openid", "profile", "email", "address", "phone"],
 }
 
+OIDC_ALLOW_DYNAMIC_OP = False
+
 OIDC_PROVIDERS = {
     'SimGuard': {
         'provider_info': {

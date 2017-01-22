@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.views.generic import TemplateView
+from django.views.generic import RedirectView
 
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='index.html'), name='index'),
+    url(r'^$', RedirectView.as_view(url='http://testpoint.io/dcl.html'), name='index'),
     url(r'^ui/', include('dcl_server.ui.urls', namespace='ui')),
     url(r'^admin/', admin.site.urls),
+    url(r'^login/$', RedirectView.as_view(url='/openid/openid/SimGuard/?next=/ui/'), name='login'),
     url(r'', include('dcl_server.djangooidc_proxy_urls')),
 ]

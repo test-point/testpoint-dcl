@@ -1,8 +1,4 @@
-# Core
-# requirements don't frozen because we don't have any particular preference,
-# and django frozen just in case. Zappa deployments won't make remote pip install,
-# so it's safe to assume that developer will see most of the incompatibilities
-# locally
+# Core requirements don't have any particular preference, so not frozen
 Django>=1.10,<1.11
 raven
 django-braces
