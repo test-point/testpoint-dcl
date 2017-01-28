@@ -6,19 +6,20 @@ The code in this directory will test a remote DCL implementation.
 ## Install
 
 This suite uses python to access (and test) remote DCL, through HTTPS and DNS protocols.
-It's developed with python 2.7, other versions may work but are not tested. The python code is tested in Linux and OSX. Raise an issue in https://github.com/ausdigital/capability-locator if you encounter issues with other python versions or operating systems.
+It's developed with python 2.7, other versions may work but are not tested. The python code is tested in Linux and OSX. Raise an issue in https://github.com/test-point/testpoint-dcl if you encounter issues with other python versions or operating systems.
 
-The `test.sh` script will install required python packagess. For it to succeed, you will need (in adition to python) the only dependencies you need to have `pip` and `virtualenv` installed.
+The `test.sh` script will install required python packagess. For it to succeed, the only dependencies you need to have is the `pip` and `virtualenv`.
 
 The HTTPS implementation requires phantomjs, so you will also need that. Note, the Ubuntu OS packaged versons of phantomjs is known NOT to work, instead `npm` installed version. To do this in ubuntu, first install npm and nodejs-legacy, then use npm to install phantomjs-prebuilt:
+
 ```
-$apt-get install -y nodejs-legacy npm
-$npm install -g phantomjs-prebuilt
+$ apt-get install -y nodejs-legacy npm
+$ npm install -g phantomjs-prebuilt
 ```
 
 ## Configuration
 
-The software will evaluate the dcl.testpoint.io target, unless you don't over-ride
+The software will evaluate the dcl.testpoint.io target, unless you don't override
 this behavior by setting appropriate environment varialbes. 
 
 There is a configuration file mechanism for setting the environment variables in a
@@ -37,15 +38,15 @@ to the default values (including this file as-is has no actual effect).
 note: `config.sh` is excluded from the repository (`.gitignore`). Your local configuration will not be overwritten by updates.
 
 
-### Warning: Concurrent use of DCL_TEST_USER
+### Warning: Concurrent use of `DCL_TEST_USER`
 
-If multiple people are running the test suite in parallel with the same DCL_TEST_USER, it's
+If multiple people are running the test suite in parallel with the same `DCL_TEST_USER`, it's
 possible the  tests will collide (causing false results). If that's an issue for you,
 it's advisable to reserve your own test accounts and use them exclusively.
 
 If you are running against dcl.testpoint.io, you can claim ABNs for exclusive use on
 https://idp.testpoint.io/. Log in with a developer account (GitHub user) to manage your
-own collection of ABNs.
+own collection of ABNs, create new ABN and try to login manually from https://dcl.testpoint.io/login/ with  newly created credential to ensure it works.
 
 
 ## Running the test suite

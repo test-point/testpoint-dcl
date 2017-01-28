@@ -6,6 +6,8 @@
 # Values shown here are equal to the hardcoded defaults
 #
 
+echo "Loading config.sh..."
+
 # target domain for DNS queries
 export DCL_READ_DOMAIN=dcl.testpoint.io
 # target domain for HTTPS updates (REST management interface)
@@ -26,20 +28,20 @@ export DCL_TEST_SECRET=33767197359
 # will return a false fail.
 export DCL_TEST_EG1_IDENTIFIER=14247983785
 export DCL_TEST_EG1_SCHEME=ABN
-export DCL_TEST_EG1_CNAME=smp.testpoint.io.
+export DCL_TEST_EG1_CNAME=dcp.testpoint.io.
 
 export DCL_TEST_EG1_IDENTIFIER=33767197359
 export DCL_TEST_EG2_SCHEME=ABN
-export DCL_TEST_EG2_CNAME=smp.testpoint.io.
+export DCL_TEST_EG2_CNAME=dcp.testpoint.io.
 
 export DCL_TEST_EG3_IDENTIFIER=67008125522
 export DCL_TEST_EG3_SCHEME=ABN
-export DCL_TEST_EG3_CNAME=smp.testpoint.io.
+export DCL_TEST_EG3_CNAME=dcp.testpoint.io.
 
 export DCL_TEST_EG4_IDENTIFIER=76031101072
 export DCL_TEST_EG4_SCHEME=ABN
-export DCL_TEST_EG4_CNAME=smp.testpoint.io.
+export DCL_TEST_EG4_CNAME=dcp.testpoint.io.
 
 export DCL_TEST_EG5_IDENTIFIER=17102364628
 export DCL_TEST_EG5_SCHEME=ABN
-export DCL_TEST_EG5_CNAME=smp.testpoint.io.
+export DCL_TEST_EG5_CNAME=dcp.testpoint.io.

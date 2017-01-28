@@ -1,12 +1,10 @@
 from pytest_bdd import (
     scenarios,
     given,
-    # scenario,
     then,
     when,
     parsers,
 )
-# from .. import util
 import fixtures
 
 scenarios('.')
@@ -20,8 +18,8 @@ def userify(txt):
 def web_ui():
     return {
         'url': fixtures.DCL_WRITE_DOMAIN,
-        'usr': fixtures.DCL_TEST_USER,
-        'psx': fixtures.DCL_TEST_SECRET
+        'user': fixtures.DCL_TEST_USER,
+        'password': fixtures.DCL_TEST_SECRET
     }
 
 
@@ -31,8 +29,8 @@ def authenticate(browser, web_ui):
     browser.visit('{}/openid/openid/SimGuard/'.format(web_ui['url']))
     if 'idp.testpoint.io' in browser.url:
         # we have login page
-        browser.fill('login', web_ui['usr'])
-        browser.fill('password', web_ui['psx'])
+        browser.fill('login', web_ui['user'])
+        browser.fill('password', web_ui['password'])
         # warning: assuming user already have logged in single time with this ABN,
         # so Oauth access confirmation doesn't appear
         button = browser.find_by_xpath('//button[@type="submit"]').first
@@ -92,13 +90,13 @@ def i_go(new_url, browser, web_ui):
 
 
 # @when('I enter new value in the SMP update form')
-# def i_enter_new_value_in_the_smp_update_form():
+# def i_enter_new_value_in_the_dcp_update_form():
 #     """I enter new value in the SMP update form."""
 #     return
 
 
 # @when('click the "update my SMP" button')
-# def click_the_update_my_smp_button():
+# def click_the_update_my_dcp_button():
 #     """Click the "update my SMP" button."""
 #     return
 
@@ -110,13 +108,13 @@ def i_go(new_url, browser, web_ui):
 
 
 # @then('I see "update my SMP" button')
-# def i_see_update_my_smp_button():
+# def i_see_update_my_dcp_button():
 #     """I see ""update my SMP" button."""
 #     return
 
 
 # @then('I see "SMP updated" message')
-# def i_see_smp_updated_message():
+# def i_see_dcp_updated_message():
 #     """I see "SMP updated" message."""
 #     return
 
@@ -134,6 +132,6 @@ def i_go(new_url, browser, web_ui):
 
 
 # @then('I see the SMP update form')
-# def i_see_the_smp_update_form():
+# def i_see_the_dcp_update_form():
 #     """I see the SMP update form."""
 #     return
