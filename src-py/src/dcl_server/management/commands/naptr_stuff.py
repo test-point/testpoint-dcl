@@ -10,8 +10,13 @@ class Command(BaseCommand):
     help = 'Play with NAPTR client'
 
     def handle(self, *args, **options):
-        result = DnsBackend.get_records()
-        for r in result['ResourceRecordSets']:
-            if r['Type'] == 'NAPTR':
-                pprint.pprint(r)
+        # result = DnsBackend.get_records()
+        # for r in result['ResourceRecordSets']:
+        #     if r['Type'] == 'NAPTR':
+        #         pprint.pprint(r)
+        # DnsBackend.clear_dcl("wawawa")
+
+        # DnsBackend.update_dcl("dumb_participant", "nobody.testpoint.io")
+
+        # DnsBackend.clear_dcl("dumb_participant")
         return

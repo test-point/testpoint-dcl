@@ -1,6 +1,8 @@
 import logging
+import pprint  # NOQA
 
 import boto3
+from constance import config
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -43,13 +45,14 @@ class DnsBackend(object):
         )
 
     @staticmethod
-    def get_records():
+    def get_records(max_items=None):
         """
         Return extensive dict with records info; pprint it to get the format
         """
         client = DnsBackend._get_client()
         response = client.list_resource_record_sets(
             HostedZoneId=settings.ROUTE53_ZONE_ID,
+            MaxItems=max_items
         )
         return response
 
@@ -106,7 +109,7 @@ class DnsBackend(object):
                         'ResourceRecordSet': {
                             'Name': new_record_name.lower(),
                             'Type': 'NAPTR',
-                            'TTL': settings.DCL_NAPTR_RECORD_TTL,
+                            'TTL': config.DCL_NAPTR_RECORD_TTL,
                             'ResourceRecords': [
                                 {
                                     'Value': new_record_value.lower()
@@ -119,4 +122,64 @@ class DnsBackend(object):
         )
         # TODO: it's quite verbose; may be removed after proper response handling.
         logger.info(response)
-        pass
+        return
+
+    @staticmethod
+    def clear_dcl(participant_id):
+        """
+        Delete record for given participant if it exists
+        """
+        if settings.ROUTE53_ZONE_ID is None:
+            raise ImproperlyConfigured(
+                "settings.ROUTE53_ZONE_ID must be set to use route53 backend"
+            )
+        client = DnsBackend._get_client()
+        record_name = "b-{}.{}.".format(
+            get_hash(participant_id),
+            settings.DCL_DNS_HOSTNAME
+        ).lower()
+
+        existing_record_set_resp = client.list_resource_record_sets(
+            HostedZoneId=settings.ROUTE53_ZONE_ID,
+            StartRecordName=record_name,
+            MaxItems="1"
+        )
+        # pprint.pprint(existing_record_set_resp)
+        record_set = None
+        if len(existing_record_set_resp) == 0:
+            record_set = None
+        else:
+            rs = existing_record_set_resp['ResourceRecordSets'][0]
+            if rs['Name'] == record_name:
+                record_set = existing_record_set_resp['ResourceRecordSets'][0]
+            else:
+                pass
+        if record_set is None:
+            logger.error(
+                "Tried to delete record set for %s %s but it wasn't found",
+                participant_id,
+                record_name
+            )
+            return False
+
+        # pprint.pprint(record_set)
+
+        try:
+            response = client.change_resource_record_sets(
+                HostedZoneId=settings.ROUTE53_ZONE_ID,
+                ChangeBatch={
+                    'Comment': 'Drop NAPTR record for specific domain',
+                    'Changes': [
+                        {
+                            'Action': "DELETE",
+                            'ResourceRecordSet': record_set
+                        },
+                    ]
+                }
+            )
+        except Exception as e:
+            logger.exception(e)
+            return False
+        # TODO: it's quite verbose; may be removed after proper response handling.
+        logger.info(response)
+        return True

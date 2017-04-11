@@ -25,11 +25,15 @@ INSTALLED_APPS = [
 
     'dcl_server',
     'dcl_server.ui',
+    'dcl_server.accreditations',
+    'dcl_server.dcl_audit',
 
     'djangooidc',  # authorize from OIDC providers
-    'storages',  # push static to S3, not required for web installation if you use CDN
+    # 'storages',  # push static to S3, not required for web installation if you use CDN
     'raven.contrib.django.raven_compat',  # error reporting
     'crispy_forms',  # bootstrap-like forms by single template tag
+    'constance',  # settings in database and django admin panel
+    'constance.backends.database',
 ]
 
 MIDDLEWARE = [
@@ -146,7 +150,7 @@ if DCL_DNS_HOSTNAME.endswith('.'):
 DCL_RECORD_PREFIX = env("DCL_RECORD_PREFIX", default='10 100 "S" "" ""').strip()
 
 # fine value is 300 for prod and something small for development
-DCL_NAPTR_RECORD_TTL = env("DCL_NAPTR_RECORD_TTL", default=60)
+DCL_NAPTR_RECORD_TTL = env("DCL_NAPTR_RECORD_TTL", default=300)
 try:
     DCL_NAPTR_RECORD_TTL = int(DCL_NAPTR_RECORD_TTL)
 except (ValueError, TypeError):
@@ -160,3 +164,5 @@ except (ValueError, TypeError):
 from .base_oidc import *  # NOQA
 from .base_logging import *  # NOQA
 from .base_aws import *  # NOQA
+from .base_drf import *  # NOQA
+from .base_constance import *  # NOQA

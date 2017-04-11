@@ -3,13 +3,15 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
 
-from dcl_server.backends.route53 import DnsBackend
-from dcl_server.oasis.constants import PID_ABN, OASIS_PREFIX_ABN
+from dcl_server.backends.generic import update_dcl_record, clear_dcl_record
 from dcl_server.oasis.utils import get_hash
+from dcl_server.dcl_api_v0.authentication import get_participant_ids_for_auth
+from dcl_server.dcl_audit.models import DclRecordUpdateToken
 
 
 class ParticipantRequiredMixin(object):
     participant_id = None
+    participant_ids = []
 
     def dispatch(self, request, *args, **kwargs):
         """
@@ -19,18 +21,8 @@ class ParticipantRequiredMixin(object):
         if not request.user.is_authenticated():
             messages.warning(request, 'Please authenticate first')
             return redirect('/')
-        abn_provided = request.session.get('userinfo', {}).get(PID_ABN)
-        if not abn_provided:
-            messages.warning(request, 'No ABN provided for this user - please use idp.testpoint.io with correct user')
-            return redirect('/')
-        try:
-            int(abn_provided)
-        except (ValueError, TypeError):
-            messages.error(request, 'Wrong ABN {} provided'.format(abn_provided))
-            return redirect('/')
-        self.participant_id = u'{}::{}'.format(
-            OASIS_PREFIX_ABN,
-            abn_provided
+        self.participant_ids = get_participant_ids_for_auth(
+            request.session.get('userinfo', {})
         )
         return super(ParticipantRequiredMixin, self).dispatch(request, *args, **kwargs)
 
@@ -41,17 +33,41 @@ class IndexUiView(ParticipantRequiredMixin, TemplateView):
     def get_context_data(self, *args, **kwargs):
         context = super(IndexUiView, self).get_context_data(*args, **kwargs)
         context.update({
-            'participant_id': self.participant_id,
-            'participant_hash': get_hash(self.participant_id)
+            'participant_id': self.participant_ids[0] if self.participant_ids else None,
+            'participant_ids': self.participant_ids,
+            'participant_hash': get_hash(
+                self.participant_ids[0]
+            ) if self.participant_ids else "{your-participant-hash-here}",
+            'update_history': DclRecordUpdateToken.objects.filter(
+                participant_id__in=self.participant_ids
+            )[:50]
         })
         return context
 
     def post(self, request, *args, **kwargs):
-        # for key in request.session.keys():
-        #     print(key, request.session.get(key))
-        new_smp_value = request.POST.get('new_smp_value', '')
-        if new_smp_value:
-            new_smp_value = new_smp_value.strip()
-            DnsBackend.update_dcl(self.participant_id, new_smp_value)
-            messages.success(request, 'Value update scheduled')
+        if self.participant_ids:
+            participant_id = request.POST.get('participant_id', '')
+            if participant_id not in self.participant_ids:
+                messages.error(
+                    request,
+                    "Strange error with participant id; make sure you have correct"
+                    "participant IDs in your auth and you don't pass any PID which "
+                    "you don't own"
+                )
+                return redirect(request.path_info)
+
+            new_dcp_value = request.POST.get('new_dcp_value', '').strip()
+            if new_dcp_value:
+                update_dcl_record(participant_id, new_dcp_value)
+                messages.success(request, 'The value update has been scheduled')
+            else:
+                result = clear_dcl_record(participant_id)
+                if result is True:
+                    messages.success(request, 'The value removal has been scheduled')
+                else:
+                    messages.warning(
+                        request,
+                        "The value removal has failed; may be you didn't have DCL "
+                        "record for this Participant ID"
+                    )
         return redirect(request.path_info)

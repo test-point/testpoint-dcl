@@ -7,6 +7,8 @@ def get_hash(key):
     Return it untouched if this value already a hash
     Converts key to lowercase before hashing
     """
+    if not key:
+        return False
     if is_hash(key):
         return key.upper()
     return hashlib.md5(key.lower().encode("utf-8")).hexdigest().upper()

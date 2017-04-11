@@ -7,7 +7,7 @@ if [ ! -f "${act}" ]; then
     set -e
     virtualenv .venv
     source ${act}
-    pip install -r requirements/base.txt
+    pip install -r requirements/base.txt -r requirements/test.txt
     set +e
 else
     source ${act}

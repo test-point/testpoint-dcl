@@ -73,6 +73,21 @@ Our reference service [https://dcl.testpoint.io](https://dcl.testpoint.io) is pu
 1. Continue to our Zappa Wiki Page (which is universal for all Zappa projects, so it's not fun to copy it everywhere).
 
 
+### Classic deployment
+
+For classic deployment we are going to use Nginx as web server and gunicorn for run backend Python code; it's assumed to be run on some docker containers at some EC2 box or any other hosting.
+
+* ensure you have access to Route53 zone and you have made the domain name for your installations (example: `some-dcl.testpoint.io`).
+* get AWS credentials (access key and secret) with access to Route53 management only
+* put these credentials to .env files (examples provided)
+* deploy the source code with env file at same level as docker-compose file to some service
+* run docker-compose up (or docker-compose up -d to run it in background)
+* configure Nginx to pass requests to some port, which is available from docker-compose file
+* configure Nginx to support HTTPS and desired domain name
+* make sure you can run `manage.py collectstatic --noinput` and make the resulting directory available as http://your-host/static/
+
+Please note that nginx needs to support mutual TLS auth as described http://nategood.com/client-side-certificate-authentication-in-ngi here and as exampled in `../client_py_tls` folder.
+
 ## Support
 
 Please raise problems, issues or suggestions as tickets at GitHub, or talk to us at the AusDigital community site (https://ausdigital.org/)

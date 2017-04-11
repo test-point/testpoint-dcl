@@ -1,17 +1,32 @@
 # Core requirements don't have any particular preference, so not frozen
-Django>=1.10,<1.11
+Django>=1.11,<1.12
 raven
 django-braces
 django-crispy-forms
 
 # openid connect
-git+https://github.com/test-point/pyoidc.git
 git+https://github.com/test-point/django-oidc.git
+# becase by default it's old version which has bug in it
+oic==0.9.5.0
 
 # Settings and deployment
 envparse
-django-storages
-zappa
+# django-storages
+# zappa
 boto
-
+boto3
 psycopg2
+
+# for API
+djangorestframework
+djangorestframework-xml
+# TODO: ensure they released our fix and replace it
+# drf-oidc-auth
+# https://github.com/ByteInternet/drf-oidc-auth.git
+git+https://github.com/koriaf/drf-oidc-auth.git
+
+django-constance[database]
+
+# Docker
+gunicorn
+eventlet

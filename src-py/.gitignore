@@ -1,6 +1,6 @@
 manage.sh
 zappa.sh
-
+*.env
 *~
 manage.sh
 runserver.sh

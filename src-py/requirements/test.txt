@@ -1,0 +1,7 @@
+# Tests requirements
+# for local usage only, pointless to use on zappa or prod deployment
+pytest
+pytest-django
+mock
+factory-boy
+pytest-cov
