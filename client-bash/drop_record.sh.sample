@@ -1,0 +1,11 @@
+#!/bin/bash
+export DCL_AUTH="JWT xx.xxx.xxx"
+curl -XDELETE --header 'Content-Type: application/json' \
+    --header 'Accept: application/json; indent=4' \
+    --header "Authorization: ${DCL_AUTH}" \
+    --data '{
+        "participantIdentifier": "51824753556",
+        "participantIdentifierScheme": "urn:oasis:names:tx:ebcore:partyid-type:iso6523:0151"
+    }' \
+    'http://127.0.0.1:5200/api/v0/dcl-record/'
+echo ""

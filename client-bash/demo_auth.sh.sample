@@ -1,0 +1,7 @@
+#!/bin/bash
+export DCL_AUTH="JWT xxx.xxx.xxx"
+curl --header 'Content-Type: application/json' \
+    --header 'Accept: application/json; indent=4' \
+    --header "Authorization: ${DCL_AUTH}" \
+    'http://127.0.0.1:5200/api/v0/demo_auth/'
+echo ""

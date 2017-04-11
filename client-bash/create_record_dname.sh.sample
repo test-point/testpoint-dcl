@@ -1,0 +1,12 @@
+#!/bin/bash
+export DCL_AUTH="JWT xxx.xxx.xxx"
+curl -XPOST --header 'Content-Type: application/json' \
+    --header 'Accept: application/json; indent=4' \
+    --header "Authorization: ${DCL_AUTH}" \
+    --data '{
+        "participantIdentifier": "11002814548",
+        "participantIdentifierScheme": "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151",
+        "capabilityPublisherUrl": "companybook.io"
+    }' \
+    'http://127.0.0.1:5200/api/v0/dcl-record/'
+echo ""
