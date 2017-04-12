@@ -5,6 +5,11 @@ Feature: Accredited Service Provider can reset testing data in the interoperabil
 # Section 3.7.1 @ "DCL-BusinessRequirements" Document
 # ID: 34
 
+Given I am Accredited Service Provider
+And there is isolated interoperability testing enviroment with URI
+Wnen I reset system to specific state
+Then system should be reverted exactly to this state
+
 ####### Conditions to be covered on Scenarios #######
 # After ASP reset system to specific state, system should be reverted exactly to this state
 #???# What is the needed reset states

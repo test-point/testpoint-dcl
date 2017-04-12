@@ -8,47 +8,47 @@ Feature: Accredited Service Provider verify the status of another service provid
 # Section 8.4.2 & 8.4.3 @ "DCL Implementation Guide" Document
 # REST API
 
-Given I am Access Point
+Given I am Accredited Service Provider
 When I send GET request to https://<DCL Domain>/api/v1/capabilityPublisher?id={dcp_id} with existindg DCP ID
 Then in response I get "200" status code
 And response body structure is in correct JSON format
 And response contains of specific DCP's ID, Trading Name, Accreditation Status
 
-Given I am Access Point
+Given I am Accredited Service Provider
 When I send GET request to https://<DCL Domain>/api/v1/capabilityPublisher?id={dcp_id} with nonexisting DCP ID
 Then in response I get "404" status code
 And response contains error code,name, userMessage
 
-Given I am Access Point
+Given I am Accredited Service Provider
 When I send GET request to https://<DCL Domain>/api/v1/capabilityPublisher?name={dcp_name} with existing DCP Name
 Then in response I get "200" status code
 And response body structure is in correct JSON format
 And response contains of specific DCP's ID, Trading Name, Accreditation Status
 
-Given I am Access Point
+Given I am Accredited Service Provider
 When I send GET request to https://<DCL Domain>/api/v1/capabilityPublisher?name={dcp_name_with_wildcard} with part of existing DCP Name
 Then in response I get "200" status code
 And response body structure is in correct JSON format
 And response contains all DCP's records having name that fits wildcard search
 
-Given I am Access Point
+Given I am Accredited Service Provider
 When I send GET request to https://<DCL Domain>/api/v1/accessPoint?id={ap_id} with existindg Access Point ID
 Then in response I get "200" status code
 And response body structure is in correct JSON format
 And response contains of specific Access Point's ID, Trading Name, Accreditation Status
 
-Given I am Access Point
+Given I am Accredited Service Provider
 When I send GET request to https://<DCL Domain>/api/v1/accessPoint?id={ap_id} with nonexisting Access Point ID
 Then in response I get "404" status code
 And response contains error code,name, userMessage
 
-Given I am Access Point
+Given I am Accredited Service Provider
 When I send GET request to https://<DCL Domain>/api/v1/accessPoint?name={ap_name} with existing Access Point Name
 Then in response I get "200" status code
 And response body structure is in correct JSON format
 And response contains of specific Access Point's ID, Trading Name, Accreditation Status
 
-Given I am Access Point
+Given I am Accredited Service Provider
 When I send GET request to https://<DCL Domain>/api/v1/accessPoint?name={ap_name_with_wildcard} with part of existing Access Point Name
 Then in response I get "200" status code
 And response body structure is in correct JSON format
