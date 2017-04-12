@@ -36,7 +36,7 @@ When I send DELETE request on https://{DCL Domain Name}/api/capabilityPublishers
 And body of request has correct JSON format with wrong capabilityPublisherID
 Then in response I should get code "403" with error in response
 
-#error 422 not described in spec for that method
+#error 422 not described in spec for that method - https://github.com/company-book/capability-lookup/issues/50 (this might not actually be required)
 Given I am nonaccredited DCP with valid Client Certificate
 When I send DELETE request on https://{DCL Domain Name}/api/capabilityPublishers/{capabilityPublisherID}/participants/{participantId}
 And body of request has correct JSON format
