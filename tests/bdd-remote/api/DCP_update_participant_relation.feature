@@ -11,13 +11,13 @@ Feature: Digital Capability Publisher update a participant record to point to hi
 
 Given I am accredited DCP with valid Client Sertificate
 When I send PUT request on https://{DCL Domain Name}/api/capabilityPublishers/{capabilityPublisherID}/participants/{participantId}
-And body of request has correct JSON format with "valid_till" field to update
+And body of request has correct JSON format with "validTill" field to update
 Then in response I should get code code "200" with correct JSON response
 And response should contain updated data
 
 Given I am accredited DCP with valid Client Sertificate
 When I send PUT request on https://{DCL Domain Name}/api/capabilityPublishers/{capabilityPublisherID}/participants/{participantId}
-And body of request has correct XML format with "valid_till" field to update
+And body of request has correct XML format with "validTill" field to update
 Then in response I should get code code "200" with correct XML response
 And response should contain updated data
 
@@ -26,10 +26,10 @@ And I know of accredited DCP2 with valid Client Certificate
 And I have date of transition between DCPs
 And DCP2 prenotified DCP1 about transition between DCPs and submited the confirmation to the DCL
 When DCP1 send PUT request on https://{DCL Domain Name}/api/capabilityPublishers/{capabilityPublisherID}/participants/{participantId}
-And body of request has correct JSON format with "valid_till" field equal to transition date
+And body of request has correct JSON format with "validTill" field equal to transition date
 Then participant_id record is updated
 When DCP2 sends PUT request on https://{DCL Domain Name}/api/capabilityPublishers/{capabilityPublisherID}/participants/{participantId}
-And body of request has correct JSON format with "valid_from" field equal to transition date
+And body of request has correct JSON format with "validFrom" field equal to transition date
 Then participant_id record sucessfully migrated from DCP1 to DCP2
 And no down time occured
 
@@ -37,7 +37,7 @@ Given participant with participantId hac existing relationship with DCP1 with va
 And I know of accredited DCP2 with valid Client Certificate
 And DCL has no confirmation about transition of participant between DCPs
 When DCP2 sends PUT request on https://{DCL Domain Name}/api/capabilityPublishers/{capabilityPublisherID}/participants/{participantId}
-And body of request has correct JSON format with "valid_from" field
+And body of request has correct JSON format with "validFrom" field
 Then in response DCP2 should get code "409" with "DCL-0002" in response
 And no transition occured
 
