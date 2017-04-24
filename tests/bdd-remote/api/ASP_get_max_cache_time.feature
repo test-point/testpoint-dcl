@@ -7,26 +7,26 @@ Feature: Accredited Service Provider get the cache details and maximum cache tim
 # Section 8.4.2 & 8.4.3 @ "DCL Implementation Guide" Document
 
 Given I am Accredited Service Provider
-When I send GET request to https://<DCL Domain>/api/v1/capabilityPublisher?id={dcp_id} with existindg DCP ID
+When I send GET request to https://<DCL Domain>/api/v1/capabilityPublishers?id={dcp_id} with existindg DCP ID
 Then in response I get "200" status code with "Cache-Control" header
 And "max-age" directive is defined in that header 
 
 Given I am Accredited Service Provider
-When I send GET request to https://<DCL Domain>/api/v1/capabilityPublisher?id={dcp_id} with existindg DCP ID
+When I send GET request to https://<DCL Domain>/api/v1/capabilityPublishers?id={dcp_id} with existindg DCP ID
 And request contains "Cache-Control" header with "no-cache" directive
 Then in response I get "200" status code with correct respons body
-And reponse body contains non-cached record
+And response body contains non-cached record
 
 Given I am Accredited Service Provider
-When I send GET request to https://<DCL Domain>/api/v1/accessPoint?id={ap_id} with existindg Access Point ID
+When I send GET request to https://<DCL Domain>/api/v1/accessPoints?id={ap_id} with existindg Access Point ID
 Then in response I get "200" status code with "Cache-Control" header
 And "max-age" directive is defined in that header
 
 Given I am Accredited Service Provider
-When I send GET request to https://<DCL Domain>/api/v1/accessPoint?id={ap_id} with existindg Access Point ID
+When I send GET request to https://<DCL Domain>/api/v1/accessPoints?id={ap_id} with existindg Access Point ID
 And request contains "Cache-Control" header with "no-cache" directive
 Then in response I get "200" status code with correct respons body
-And reponse body contains non-cached record
+And response body contains non-cached record
 
 ####### Conditions to be covered on Scenarios #######
 # All DCL lookup services must provide header information that specifies the maximum cache period.
