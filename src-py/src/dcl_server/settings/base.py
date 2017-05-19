@@ -112,17 +112,17 @@ STATIC_ROOT = env(
 )
 
 
-# Django-storages area: needed to copy static files to S3 bucket;
-# doesn't really required on WWW if you use CDN, but required otherwise
-AWS_STORAGE_BUCKET_NAME = env('DCL_AWS_STORAGE_BUCKET_NAME', default=None)
-AWS_QUERYSTRING_AUTH = False
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
-# it's safe to set such headers if you use hashed filenames, and not always safe in other cases
-# they are django-storages-specific anyway
-# AWS_HEADERS = {
-#     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-#     'Cache-Control': 'max-age=94608000',
-# }
+# # Django-storages area: needed to copy static files to S3 bucket;
+# # doesn't really required on WWW if you use CDN, but required otherwise
+# AWS_STORAGE_BUCKET_NAME = env('DCL_AWS_STORAGE_BUCKET_NAME', default=None)
+# AWS_QUERYSTRING_AUTH = False
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+# # it's safe to set such headers if you use hashed filenames, and not always safe in other cases
+# # they are django-storages-specific anyway
+# # AWS_HEADERS = {
+# #     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+# #     'Cache-Control': 'max-age=94608000',
+# # }
 
 # etc
 

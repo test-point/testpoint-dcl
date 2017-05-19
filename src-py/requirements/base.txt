@@ -28,5 +28,6 @@ git+https://github.com/koriaf/drf-oidc-auth.git
 django-constance[database]
 
 # Docker
-gunicorn
+gevent==1.2.1
+gunicorn==19.7.1
 eventlet

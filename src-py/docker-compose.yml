@@ -12,4 +12,3 @@ services:
       - ./src:/code/src
     ports:
       - "127.0.0.1:7777:8080"
-
