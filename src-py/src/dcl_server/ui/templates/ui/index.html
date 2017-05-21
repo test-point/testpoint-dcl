@@ -25,6 +25,7 @@
     </p>
     {% if participant_ids %}
       <form method="POST" action="#" style='padding: 20px;'>
+      {% csrf_token %}
       <div class="form-group">
         <label for='id_participant_id'>Participant ID to update:</label>
         <div>

@@ -10,23 +10,24 @@ from .models import (
 
 
 class AccreditedPartyForm(forms.ModelForm):
-    # def __init__(self, *args, **kwargs):
-    #     super(AccreditedPartyForm, self).__init__(*args, **kwargs)
 
     def save(self, *args, **kwargs):
-        if self.instance:
+        if self.instance and self.instance.pk:
             model_before_save = AccreditedParty.objects.get(pk=self.instance.pk)
+        else:
+            model_before_save = None
         saved_instance = super(AccreditedPartyForm, self).save(*args, **kwargs)
-        for field in self.fields:
-            old_value = getattr(model_before_save, field, None)
-            new_value = getattr(saved_instance, field, None)
-            if old_value != new_value:
-                PartyFieldUpdate.objects.create(
-                    actor=self.user,
-                    field=field,
-                    party=saved_instance,
-                    new_value=new_value,
-                )
+        if model_before_save:
+            for field in self.fields:
+                old_value = getattr(model_before_save, field, None)
+                new_value = getattr(saved_instance, field, None)
+                if old_value != new_value:
+                    PartyFieldUpdate.objects.create(
+                        actor=self.user,
+                        field=field,
+                        party=saved_instance,
+                        new_value=new_value,
+                    )
         return saved_instance
 
 

@@ -59,16 +59,16 @@ OIDC_AUTH = {
     'OIDC_ENDPOINTS': {
         'default': {
             'issuer': 'default',
-            'endpoint': env('DCL_OIDC_ENDPOINT', default='http://127.0.0.1:7500'),
-            'audiences': env('DCL_OIDC_AUDIENCES', default='').split(','),
+            'endpoint': env('DCL_OIDC_ENDPOINT', default=SIMGUARD_HOSTNAME),
+            'audiences': env('DCL_OIDC_AUDIENCES', default=SIMGUARD_CLIENT_ID).split(','),
         }
     },
 
     # Specify OpenID Connect endpoint. Configuration will be
     # automatically done based on the discovery document found
     # at <endpoint>/.well-known/openid-configuration
-    'OIDC_ENDPOINT': env('DCL_OIDC_ENDPOINT', default='http://127.0.0.1:7500'),
-    'OIDC_AUDIENCES': env('DCL_OIDC_AUDIENCES', default='809799').split(','),
+    'OIDC_ENDPOINT': env('DCL_OIDC_ENDPOINT', default=SIMGUARD_HOSTNAME),
+    'OIDC_AUDIENCES': env('DCL_OIDC_AUDIENCES', default=SIMGUARD_CLIENT_ID).split(','),
     'OIDC_RESOLVE_USER_FUNCTION': 'dcl_server.dcl_api_v0.authentication.get_oidc_drf_user',
     'OIDC_LEEWAY': 3600 * 48,
     'OIDC_JWKS_EXPIRATION_TIME': 24 * 60 * 60,
@@ -84,7 +84,6 @@ if DRFOIDC_ENDPOINTS_CONF:
     #  readablename;issuer;endpoint;audience1,audience2|
     #  simguard;https://idp.testpoint.io;https://idp.testpoint.io;928680,242989,697856|
     #  loa1dbc;http://127.0.0.1:7555;http://127.0.0.1:7555;671905|
-    #  loa1dbc;https://dbc-loa1-idp.companybook.io;https://dbc-loa1-idp.companybook.io;755706|
     for idp_row in DRFOIDC_ENDPOINTS_CONF.split('|'):
         readable_name, issuer, endpoint, audiences = idp_row.split(';')
         audiences = audiences.split(',')

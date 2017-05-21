@@ -10,6 +10,8 @@ SECRET_KEY = env('DCL_SECRET_KEY')
 
 DEBUG = env.bool('DCL_DEBUG', default=True)
 
+DO_INDEX_REDIRECT = env.bool('DCL_DO_INDEX_REDIRECT', default=not DEBUG)
+
 # update it to your domain if you want
 ALLOWED_HOSTS = ['*']
 

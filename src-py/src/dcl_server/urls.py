@@ -13,8 +13,13 @@ urlpatterns = [
     url(r'', include('dcl_server.djangooidc_proxy_urls')),
 ]
 
-if settings.DEBUG is False:
+if settings.DO_INDEX_REDIRECT:
     urlpatterns.insert(
         0,
         url(r'^$', RedirectView.as_view(url='http://testpoint.io/dcl.html'), name='index'),
+    )
+else:
+    urlpatterns.insert(
+        0,
+        url(r'^$', RedirectView.as_view(url='/login/'), name='index'),
     )
