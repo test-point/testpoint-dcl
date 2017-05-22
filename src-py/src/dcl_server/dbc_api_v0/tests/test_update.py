@@ -20,16 +20,18 @@ def test_update_dcl_record_partyid(backend_mock):
     assert DclRecordUpdateToken.objects.count() == 0
 
     acp = AccreditedPartyFactory()
+    id_scheme = "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151"
     id_value = '51824753556'
+    participant_id = "{}::{}".format(id_scheme, id_value)
 
     # try to create some record without access to that party
     resp = do_jwt_request(
-        "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::" + id_value,
+        participant_id,
         'post',
-        reverse('dbc-api-v0:update-dcl-record', args=[acp.id]),
+        reverse('dbc-api-v0:dcl-record-create', args=[acp.id]),
         data={
             "participantIdentifier": id_value,
-            "participantIdentifierScheme": "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151",
+            "participantIdentifierScheme": id_scheme,
             "capabilityPublisherID": "1"
         },
         format='json'
@@ -52,13 +54,15 @@ def test_update_dcl_record_partyid(backend_mock):
     )
 
     # shall have access now
+
+    # replace by POST
     resp = do_jwt_request(
-        "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::" + id_value,
+        participant_id,
         'post',
-        reverse('dbc-api-v0:update-dcl-record', args=[acp.id]),
+        reverse('dbc-api-v0:dcl-record-create', args=[acp.id]),
         data={
             "participantIdentifier": id_value,
-            "participantIdentifierScheme": "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151",
+            "participantIdentifierScheme": id_scheme,
             "capabilityPublisherID": "1"
         },
         format='json'
@@ -73,6 +77,28 @@ def test_update_dcl_record_partyid(backend_mock):
     assert backend_mock.call_count == 1
     assert DclRecordUpdateToken.objects.count() == 1
 
+    # update by PUT/details
+    resp = do_jwt_request(
+        participant_id,
+        'put',
+        reverse('dbc-api-v0:dcl-record-details', args=[acp.id, participant_id]),
+        data={
+            "participantIdentifier": id_value,
+            "participantIdentifierScheme": id_scheme,
+            "capabilityPublisherID": "1"
+        },
+        format='json'
+    )
+
+    print(resp.content)
+    assert resp.status_code == 200
+    assert resp.json() == {
+        "hash": "b-ef1067ff41f0b4885eea42ab0548659e"
+    }
+
+    assert backend_mock.call_count == 2
+    assert DclRecordUpdateToken.objects.count() == 2
+
 
 @pytest.mark.django_db
 @mock.patch('dcl_server.backends.route53.DnsBackend.clear_dcl')
@@ -86,7 +112,7 @@ def test_record_delete(backend_mock, admin_user, admin_client):
 
     admin_client.delete(
         reverse(
-            'dbc-api-v0:delete-dcl-record',
+            'dbc-api-v0:dcl-record-details',
             args=[1, 'urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::51824753556']
         )
     )

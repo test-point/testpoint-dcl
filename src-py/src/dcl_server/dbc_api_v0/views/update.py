@@ -174,7 +174,7 @@ class UpdateDclRecordSerializer(serializers.Serializer):
         }
 
 
-class UpdateDclRecordView(generics.CreateAPIView):
+class CreateReplaceDclRecordView(generics.CreateAPIView):
     """
     Input format:
     {
@@ -210,7 +210,18 @@ class UpdateDclRecordView(generics.CreateAPIView):
         return self.post(*args, **kwargs)
 
 
-class DeleteDclRecordView(generics.DestroyAPIView):
+class UpdateDeleteDclRecordView(generics.UpdateAPIView, generics.DestroyAPIView):
+    serializer_class = UpdateDclRecordSerializer
+
+    def update(self, request, *args, **kwargs):
+        # TODO: now we trust content more than url. may be we need to compare them.
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return response.Response(
+            serializer.get_response_data(),
+            status=status.HTTP_200_OK,
+        )
 
     def destroy(self, request, *args, **kwargs):
         participant_id = kwargs.get('participantId')
