@@ -52,7 +52,8 @@ def test_delete_dcl_record(backend_mock, admin_user):
         'delete',
         reverse(
             'ausdigital-api-v0:delete-dcl-record',
-            args=['urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::51824753556']),
+            args=['urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::51824753556']
+        ),
     )
     print(resp.content)
     assert resp.status_code == 204

@@ -44,8 +44,6 @@ def test_update_dcl_record_partyid(backend_mock):
     }
 
     # give access to that party for latest created user
-    print(list(get_user_model().objects.all().values_list('username', flat=True)))
-
     new_user = get_user_model().objects.get(username='simguard_{}'.format(id_value))
 
     UserPartyAccess.objects.create(
@@ -77,11 +75,22 @@ def test_update_dcl_record_partyid(backend_mock):
 
 
 @pytest.mark.django_db
-@pytest.mark.skip
-def test_record_delete():
+@mock.patch('dcl_server.backends.route53.DnsBackend.clear_dcl')
+def test_record_delete(backend_mock, admin_user, admin_client):
     # TODO: check if request proxy everything fine till deep backend
     # TODO: check errors for:
     # * auth
     # * wrong url/payload parameters
     # * access to given Party
-    return
+    assert DclRecordUpdateToken.objects.count() == 0
+
+    admin_client.delete(
+        reverse(
+            'dbc-api-v0:delete-dcl-record',
+            args=[1, 'urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::51824753556']
+        )
+    )
+
+    assert backend_mock.call_count == 1
+    assert DclRecordUpdateToken.objects.count() == 1
+    assert not DclRecordUpdateToken.objects.first().new_value

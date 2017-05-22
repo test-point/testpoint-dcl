@@ -174,12 +174,7 @@ class UpdateDclRecordSerializer(serializers.Serializer):
         }
 
 
-class DeleteDclRecordSerializer(UpdateDclRecordSerializer):
-    def _validate_capability_publisher_dualism(self, data):
-        return
-
-
-class UpdateDclRecordView(generics.CreateAPIView, generics.DestroyAPIView):
+class UpdateDclRecordView(generics.CreateAPIView):
     """
     Input format:
     {
@@ -198,11 +193,7 @@ class UpdateDclRecordView(generics.CreateAPIView, generics.DestroyAPIView):
     </RegisterCapabilityAddressForParticipant >
     """
 
-    def get_serializer_class(self):
-        if self.request.method == 'DELETE':
-            return DeleteDclRecordSerializer
-        else:
-            return UpdateDclRecordSerializer
+    serializer_class = UpdateDclRecordSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -215,11 +206,15 @@ class UpdateDclRecordView(generics.CreateAPIView, generics.DestroyAPIView):
             headers=headers
         )
 
+    def put(self, *args, **kwargs):
+        return self.post(*args, **kwargs)
+
 
 class DeleteDclRecordView(generics.DestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
-        participant_id = kwargs.get('participant_id')
+        participant_id = kwargs.get('participantId')
+        assert participant_id
 
         user_auth = getattr(request, 'auth', {}) or {}
         parties = user_auth.get('accredited_parties', [])
@@ -242,7 +237,7 @@ class DeleteDclRecordView(generics.DestroyAPIView):
                 {
                     "errors": [
                         {
-                            "code": "DCL-X500",
+                            "code": "DCL-X400",
                             "name": "Record Update Problem",
                             "userMessage": (
                                 "It was impossible to delete such resource "

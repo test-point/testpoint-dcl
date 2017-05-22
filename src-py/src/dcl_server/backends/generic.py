@@ -7,6 +7,7 @@ from dcl_server.dcl_audit.models import DclRecordUpdateToken
 
 
 def update_dcl_record(participant_id, new_value, actor_party=None, actor_user=None):
+    assert participant_id, "participant_id is empty"
     # create audit record
     DclRecordUpdateToken.objects.create(
         participant_id=participant_id,
@@ -21,6 +22,7 @@ def update_dcl_record(participant_id, new_value, actor_party=None, actor_user=No
 
 def clear_dcl_record(participant_id, actor_party=None, actor_user=None):
     # create audit record
+    assert participant_id, "participant_id is empty"
     DclRecordUpdateToken.objects.create(
         participant_id=participant_id,
         new_value='',

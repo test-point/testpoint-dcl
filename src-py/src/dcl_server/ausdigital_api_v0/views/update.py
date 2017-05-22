@@ -116,7 +116,7 @@ class DeleteDclRecordView(generics.DestroyAPIView):
                 {
                     "errors": [
                         {
-                            "code": "DCL-X500",
+                            "code": "DCL-X400",
                             "name": "Record Update Problem",
                             "userMessage": (
                                 "It was impossible to delete such resource "
