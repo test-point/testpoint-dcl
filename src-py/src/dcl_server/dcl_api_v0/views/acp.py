@@ -51,10 +51,20 @@ class ACPListView(generics.ListAPIView):
         qs = AccreditedParty.objects.filter(
             accreditation_status=AccreditedParty.STATUS_ACCR
         )
-        if self.request.GET.get('id', '').strip():
-            qs = qs.filter(
-                service_provider_id=self.request.GET['id']
-            )
+        try:
+            if self.request.GET.get('service_provider_id', '').strip():
+                qs = qs.filter(
+                    service_provider_id=self.request.GET['service_provider_id']
+                )
+        except (ValueError, TypeError):
+            pass
+        try:
+            if self.request.GET.get('id', '').strip():
+                qs = qs.filter(
+                    id=self.request.GET['id']
+                )
+        except (ValueError, TypeError):
+            pass
         if self.request.GET.get('name', '').strip():
             qs = qs.filter(
                 trading_name=self.request.GET['name']
@@ -70,10 +80,20 @@ class AccessPointsListView(generics.ListAPIView):
         qs = AccreditedParty.objects.filter(
             accreditation_status=AccreditedParty.STATUS_ACCR
         )
-        if self.request.GET.get('id', '').strip():
-            qs = qs.filter(
-                service_provider_id=self.request.GET['id']
-            )
+        try:
+            if self.request.GET.get('service_provider_id', '').strip():
+                qs = qs.filter(
+                    service_provider_id=self.request.GET['service_provider_id']
+                )
+        except (ValueError, TypeError):
+            pass
+        try:
+            if self.request.GET.get('id', '').strip():
+                qs = qs.filter(
+                    id=self.request.GET['id']
+                )
+        except (ValueError, TypeError):
+            pass
         if self.request.GET.get('name', '').strip():
             qs = qs.filter(
                 trading_name=self.request.GET['name']
