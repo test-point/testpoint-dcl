@@ -74,14 +74,14 @@ class AccreditedParty(models.Model):
     def valid_certificates(self):
         now = timezone.now()
         return {
-            'client': self.certs.filter(
+            'client': list(self.certs.filter(
                 models.Q(revoked__gt=now) | models.Q(revoked__isnull=True),
                 is_client=True,
-            ).values_list('body', flat=True),
-            'server': self.certs.filter(
+            ).values_list('body', flat=True)),
+            'server': list(self.certs.filter(
                 models.Q(revoked__gt=now) | models.Q(revoked__isnull=True),
                 is_client=False,
-            ).values_list('body', flat=True),
+            ).values_list('body', flat=True)),
         }
 
 

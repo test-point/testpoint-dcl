@@ -37,4 +37,4 @@ def test_fetch_acp_list_access(admin_user, admin_client):
     )
     print(resp.content)
     assert resp.status_code == 200
-    assert resp.json()['results'][0]['service_provider_id'] == ap1.service_provider_id
+    assert resp.json()['results'][0]['CapabilityPublisherID'] == ap1.service_provider_id
