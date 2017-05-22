@@ -16,30 +16,6 @@ def test_update_dcl_record_dcpurl(backend_mock, admin_user):
     assert backend_mock.call_count == 0
     assert DclRecordUpdateToken.objects.count() == 0
 
-    # try to create some record without access to that party
-    resp = do_jwt_request(
-        "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::51824753556",
-        'post',
-        reverse('ausdigital-api-v0:update-dcl-record'),
-        data={
-            "participantIdentifier": "51824753556",
-            "participantIdentifierScheme": "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151",
-            "capabilityPublisherID": "1"
-        },
-        format='json'
-    )
-    print(resp.content)
-    assert resp.status_code == 400
-    assert resp.json() == {
-        "capabilityPublisherID": [
-            "Given capabilityPublisherID is not available (you may leave it empty)"
-        ]
-    }
-
-    assert backend_mock.call_count == 0
-    assert DclRecordUpdateToken.objects.count() == 0
-
-    # ok, we don't have it
     # try to just update my own
     resp = do_jwt_request(
         "urn:oasis:names:tc:ebcore:partyid-type:iso6523:0151::51824753556",

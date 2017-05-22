@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from .views.common import DemoAuthView, HealthcheckView
-from dcl_server.dbc_api_v0.views.update import UpdateDclRecordView
+from .views.update import UpdateDclRecordView
 
 urlpatterns = [
     # helpers
