@@ -47,9 +47,9 @@ class AccreditedParty(models.Model):
         "URL (for registration page)",
         max_length=2048,
     )
-    dcl_host = models.CharField(
+    dcp_host = models.CharField(
         max_length=2048,
-        default='dcl.testpoint.io',
+        default='dcp-for-this-party.testpoint.io',
         unique=True,
     )
 

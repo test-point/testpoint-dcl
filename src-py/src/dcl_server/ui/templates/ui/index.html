@@ -16,12 +16,12 @@
     <p>Here you can change your DCP to any domain name. Please consult your Digital Capability Provider and Service Metadata Publisher for correct value.</p>
     <p>To test the newly created/updated item, please do:<br/>
     (assuming the participant ID is <em>{{ participant_id }}</em>)
-    <pre>host -t naptr b-{{ participant_hash|lower }}.dcl.testpoint.io. ns-1541.awsdns-00.co.uk</pre>
+    <pre>host -t naptr b-{{ participant_hash|lower }}.{{ DCL_DNS_HOSTNAME }}. ns-1541.awsdns-00.co.uk</pre>
     or <br/>
-    <pre>host -t naptr b-{{ participant_hash|lower }}.dcl.testpoint.io. 8.8.8.8</pre>
+    <pre>host -t naptr b-{{ participant_hash|lower }}.{{ DCL_DNS_HOSTNAME }}. 8.8.8.8</pre>
     Expected result:
     <pre>b-{{ participant_hash|lower }}.dcl.testpoint.io has NAPTR record 10 100 "S" "" "" your-entered-domain.</pre>
-    By default all known participant IDS and reffer to dcp.testpoint.io. It may take up to 5 minutes (rare cases - up to 30) for all changes to propagate to all our DNS servers. Usually it's less than a minute. It may take up to 24 hours to propagate to DNS servers around the world, and 3rd party DNS servers may cache this value - that's why we use custom DNS server in this demo requests.
+    For dcl.testpoint.io all unknown participant IDS reffer to dcp.testpoint.io (for simplicity of downstream services testing). Custom DCL installations may have this behaviour disabled. It may take up to 5 minutes (in rare cases - up to 30) for all changes to propagate to all our DNS servers. Usually it's less than a minute. It may take up to 24 hours to propagate to DNS servers around the world, and 3rd party DNS servers may cache this value - that's why we use custom DNS server in this demo requests.
     </p>
     {% if participant_ids %}
       <form method="POST" action="#" style='padding: 20px;'>

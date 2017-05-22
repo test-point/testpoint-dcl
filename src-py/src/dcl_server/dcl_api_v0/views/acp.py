@@ -14,7 +14,7 @@ class ACPDetailsSerializer(serializers.ModelSerializer):
         model = AccreditedParty
         fields = (
             'id', 'service_provider_id', 'trading_name', 'contact_email',
-            'registration_url', 'dcl_host', 'created', 'accreditation_status'
+            'registration_url', 'dcp_host', 'created', 'accreditation_status'
         )
 
     def to_representation(self, instance):
@@ -31,7 +31,7 @@ class AccessPointDetailsSerializer(serializers.ModelSerializer):
         model = AccreditedParty
         fields = (
             'id', 'service_provider_id', 'trading_name', 'contact_email',
-            'registration_url', 'dcl_host', 'created', 'accreditation_status'
+            'registration_url', 'dcp_host', 'created', 'accreditation_status'
         )
 
     def to_representation(self, instance):

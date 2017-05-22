@@ -121,7 +121,7 @@ class UpdateDclRecordSerializer(serializers.Serializer):
                 participant_id=data['participant_id']
             ).order_by('-id').first()
             if last_token:
-                if last_token.value and last_token.value != data['new_value']:
+                if last_token.new_value and last_token.new_value != data['new_value']:
                     raise serializers.ValidationError(
                         "Participant ID DCL record has conflicting value"
                     )
@@ -145,7 +145,7 @@ class UpdateDclRecordSerializer(serializers.Serializer):
         if data.get('capabilityPublisherUrl'):
             new_value = data.get('capabilityPublisherUrl')
         elif data.get('capabilityPublisherID'):
-            new_value = data.get('capabilityPublisherID').dcl_host
+            new_value = data.get('capabilityPublisherID').dcp_host
         return new_value
 
     def save(self):

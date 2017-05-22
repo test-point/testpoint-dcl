@@ -1,5 +1,6 @@
 # from braces.views import LoginRequiredMixin
 from django.contrib import messages
+from django.conf import settings
 from django.views.generic import TemplateView
 from django.shortcuts import redirect
 
@@ -40,7 +41,8 @@ class IndexUiView(ParticipantRequiredMixin, TemplateView):
             ) if self.participant_ids else "{your-participant-hash-here}",
             'update_history': DclRecordUpdateToken.objects.filter(
                 participant_id__in=self.participant_ids
-            )[:50]
+            )[:50],
+            'DCL_DNS_HOSTNAME': settings.DCL_DNS_HOSTNAME,
         })
         return context
 

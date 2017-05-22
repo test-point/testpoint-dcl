@@ -20,6 +20,6 @@ class AccreditedPartyFactory(factory.django.DjangoModelFactory):
     trading_name = factory.Sequence(lambda n: 'Trading Name %s' % n)
     contact_email = factory.Sequence(lambda n: 'contact%s@email.org.lalala' % n)
     registration_url = factory.Sequence(lambda n: 'https://registration-%s.testpoint.io/' % n)
-    dcl_host = factory.Sequence(lambda n: 'dcl-%s.testpoint.io' % n)
+    dcp_host = factory.Sequence(lambda n: 'dcp-%s.testpoint.io' % n)
 
     accreditation_status = AccreditedParty.STATUS_ACCR
