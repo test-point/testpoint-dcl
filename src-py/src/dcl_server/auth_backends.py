@@ -5,14 +5,9 @@ class OpenIdConnectAndRegisterBackend(OpenIdConnectBackend):
 
     def authenticate(self, **kwargs):
         user = super(OpenIdConnectAndRegisterBackend, self).authenticate(**kwargs)
-        # # update our local profile every login
-        # if user is not None:
-        #     user.business.extra_data = kwargs
-        #     user.business.auth_source = user.business.AUTH_SIMGUARD
-        #     user.business.save()
         return user
 
     def clean_username(self, sub):
-        # TODO: how to get if it simguard or vanguard?
-        # theoretically possible by kwargs (data from IDC), but not rock-solid
+        # TODO: once we support login with multiple OIDC providers this code
+        # will be a little more complex to reflect it
         return 'idp_{}'.format(sub)

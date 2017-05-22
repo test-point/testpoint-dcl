@@ -4,7 +4,6 @@ import pprint  # NOQA
 
 import requests
 from django.contrib.auth import get_user_model
-from django.conf import settings
 from django.utils import timezone
 from jwkest.jws import JWSig
 from jwkest.jwk import KEYS
@@ -18,20 +17,17 @@ logger = logging.getLogger(__name__)
 
 
 def get_oidc_drf_user(request, id_token):
-    issuer_readable_name = "some_idp"
-    for readable_name, possible_issuer_row in settings.OIDC_AUTH['OIDC_ENDPOINTS'].items():
-        if possible_issuer_row['issuer'] == id_token.get('iss'):
-            issuer_readable_name = readable_name
     user_class = get_user_model()
-    # TODO: different username for different IDP
-    natural_key = "{}_{}".format(issuer_readable_name, id_token.get('sub'))
+    iss = id_token.get('iss', 'idp_api')
+    userprefix = iss.replace('https://', '').replace('http://', '').replace('/', '').replace(':', '_')
+    natural_key = "{}_{}".format(userprefix, id_token.get('sub'))
     try:
         user = user_class.objects.get_by_natural_key(natural_key)
     except user_class.DoesNotExist:
-        email_prepared = id_token['iss'].replace('https://', '').replace('http://', '')
+        # create the new user
         user = user_class.objects.create(
             username=natural_key,
-            email='{}@{}'.format(id_token['sub'], email_prepared),
+            email='{}@{}'.format(id_token['sub'], natural_key),
         )
         logger.info("User %s with auth %s has been created", natural_key, id_token)
     user.last_login = timezone.now()
