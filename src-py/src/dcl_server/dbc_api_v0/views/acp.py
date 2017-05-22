@@ -4,7 +4,6 @@ import logging
 from rest_framework import generics, serializers, permissions
 
 from dcl_server.accreditations.models import AccreditedParty
-# from dcl_server.dcl_api_v0.authentication import RequireASP
 
 logger = logging.getLogger(__name__)
 

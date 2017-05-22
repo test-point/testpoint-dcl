@@ -33,7 +33,7 @@ def do_jwt_request(jwt_pid, method='get', *args, **kwargs):
 
         kwargs['headers'] = kwargs.get('headers', {})
         kwargs['headers']['Authorization'] = 'JWT somedumbstuff'
-        with mock.patch("dcl_server.dcl_api_v0.authentication.MultipleProvidersJWTAuthentication.authenticate") as mocked_auth:
+        with mock.patch("dcl_server.ausdigital_api_v0.authentication.MultipleProvidersJWTAuthentication.authenticate") as mocked_auth:
             mocked_auth.return_value = auth_result
             resp = getattr(api_client, method)(
                 *args, **kwargs

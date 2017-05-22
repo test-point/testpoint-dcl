@@ -9,7 +9,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^login/$', RedirectView.as_view(url='/openid/openid/SimGuard/?next=/ui/'), name='login'),
 
-    # url(r'^api/ausdigital/v0/', include('dcl_server.ausdigital_api_v0.urls', namespace='ausdigital-api-v0')),
+    url(r'^api/ausdigital/v0/', include('dcl_server.ausdigital_api_v0.urls', namespace='ausdigital-api-v0')),
     url(r'^api/dbc/v0/', include('dcl_server.dbc_api_v0.urls', namespace='dbc-api-v0')),
 
     url(r'', include('dcl_server.djangooidc_proxy_urls')),

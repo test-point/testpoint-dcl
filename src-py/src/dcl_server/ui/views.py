@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from dcl_server.backends.generic import update_dcl_record, clear_dcl_record
 from dcl_server.oasis.utils import get_hash
-from dcl_server.dcl_api_v0.authentication import get_participant_ids_for_auth
+from dcl_server.ausdigital_api_v0.authentication import get_participant_ids_for_auth
 from dcl_server.dcl_audit.models import DclRecordUpdateToken
 
 

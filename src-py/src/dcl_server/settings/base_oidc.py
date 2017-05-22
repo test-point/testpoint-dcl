@@ -69,7 +69,7 @@ OIDC_AUTH = {
     # at <endpoint>/.well-known/openid-configuration
     'OIDC_ENDPOINT': env('DCL_OIDC_ENDPOINT', default=SIMGUARD_HOSTNAME),
     'OIDC_AUDIENCES': env('DCL_OIDC_AUDIENCES', default=SIMGUARD_CLIENT_ID).split(','),
-    'OIDC_RESOLVE_USER_FUNCTION': 'dcl_server.dcl_api_v0.authentication.get_oidc_drf_user',
+    'OIDC_RESOLVE_USER_FUNCTION': 'dcl_server.ausdigital_api_v0.authentication.get_oidc_drf_user',
     'OIDC_LEEWAY': 3600 * 48,
     'OIDC_JWKS_EXPIRATION_TIME': 24 * 60 * 60,
     'OIDC_BEARER_TOKEN_EXPIRATION_TIME': 60 * 10,

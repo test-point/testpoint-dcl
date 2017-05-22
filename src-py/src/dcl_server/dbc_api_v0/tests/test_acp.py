@@ -32,7 +32,7 @@ def test_fetch_acp_list_access(admin_user, admin_client):
     # )
 
     resp = admin_client.get(
-        reverse('api-v0:acp-list'),
+        reverse('dbc-api-v0:acp-list'),
         format="json",
     )
     print(resp.content)
