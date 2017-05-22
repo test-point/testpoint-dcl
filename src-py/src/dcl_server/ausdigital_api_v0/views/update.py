@@ -72,11 +72,7 @@ class UpdateDclRecordSerializer(serializers.Serializer):
         }
 
 
-class DeleteDclRecordSerializer(UpdateDclRecordSerializer):
-    pass
-
-
-class UpdateDclRecordView(generics.CreateAPIView, generics.DestroyAPIView):
+class UpdateDclRecordView(generics.CreateAPIView):
     """
     Input format:
     {
@@ -87,10 +83,7 @@ class UpdateDclRecordView(generics.CreateAPIView, generics.DestroyAPIView):
     """
 
     def get_serializer_class(self):
-        if self.request.method == 'DELETE':
-            return DeleteDclRecordSerializer
-        else:
-            return UpdateDclRecordSerializer
+        return UpdateDclRecordSerializer
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
@@ -103,13 +96,19 @@ class UpdateDclRecordView(generics.CreateAPIView, generics.DestroyAPIView):
             headers=headers
         )
 
+
+class DeleteDclRecordView(generics.DestroyAPIView):
+
     def destroy(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        # TODO: check if given user can work with given object
-        # check if given object has given value (or just drop?)
-        # better record check - don't exist, wrong value, backend error
-        result = clear_dcl_record(serializer.validated_data['participant_id'])
+        participant_id = kwargs.get('participant_id')
+        user_auth = getattr(request, 'auth', {}) or {}
+        available_participant_ids = user_auth.get('participant_ids', [])
+        if participant_id not in available_participant_ids:
+            raise serializers.ValidationError(
+                "You don't have access to this ParticipantId"
+            )
+
+        result = clear_dcl_record(participant_id)
         if result is True:
             return response.Response(status=status.HTTP_204_NO_CONTENT)
         else:

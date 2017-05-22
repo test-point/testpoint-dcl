@@ -215,13 +215,26 @@ class UpdateDclRecordView(generics.CreateAPIView, generics.DestroyAPIView):
             headers=headers
         )
 
+
+class DeleteDclRecordView(generics.DestroyAPIView):
+
     def destroy(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        # TODO: check if given user can work with given object
-        # check if given object has given value (or just drop?)
-        # better record check - don't exist, wrong value, backend error
-        result = clear_dcl_record(serializer.validated_data['participant_id'])
+        participant_id = kwargs.get('participant_id')
+
+        user_auth = getattr(request, 'auth', {}) or {}
+        parties = user_auth.get('accredited_parties', [])
+
+        for party in parties:
+            last_token = DclRecordUpdateToken.objects.filter(
+                participant_id=participant_id
+            ).order_by('-id').first()
+            if last_token:
+                if last_token.new_value and last_token.new_value != party.dcp_host:
+                    raise serializers.ValidationError(
+                        "Participant ID DCL record has conflicting value"
+                    )
+
+        result = clear_dcl_record(participant_id)
         if result is True:
             return response.Response(status=status.HTTP_204_NO_CONTENT)
         else:
@@ -229,11 +242,11 @@ class UpdateDclRecordView(generics.CreateAPIView, generics.DestroyAPIView):
                 {
                     "errors": [
                         {
-                            "code": "DCL-0002",
-                            "name": "Resource Mismatch.",
+                            "code": "DCL-X500",
+                            "name": "Record Update Problem",
                             "userMessage": (
-                                "A resource already exists for the participant's unique"
-                                "identifier but contains an alternative Digital Capability Publisher ID."
+                                "It was impossible to delete such resource "
+                                "(due it access problems or non-existance)"
                             )
                         }
                     ]

@@ -3,7 +3,7 @@ from django.conf.urls import url
 from dcl_server.ausdigital_api_v0.views.common import DemoAuthView
 
 from .views.acp import ACPListView, AccessPointsListView
-from .views.update import UpdateDclRecordView
+from .views.update import UpdateDclRecordView, DeleteDclRecordView
 
 urlpatterns = [
     # helpers
@@ -18,8 +18,8 @@ urlpatterns = [
     ),
     url(
         r'^capabilityPublishers?/(?P<capabilityPublisherID>[^/]+)/participants/(?P<participantId>[^/]+)/?$',
-        UpdateDclRecordView.as_view(),
-        name='update-dcl-record'
+        DeleteDclRecordView.as_view(),
+        name='delete-dcl-record'
     ),
     # list of eDelivery DCPs that hold a current accreditation
     url(
