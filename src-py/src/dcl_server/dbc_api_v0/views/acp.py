@@ -13,7 +13,7 @@ class ACPDetailsSerializer(serializers.ModelSerializer):
         model = AccreditedParty
         fields = (
             'service_provider_id', 'trading_name', 'contact_email',
-            'registration_url', 'created',
+            'registration_url', 'created', 'accreditation_status'
             # 'accreditation_status', 'dcp_host',
         )
 
@@ -25,6 +25,8 @@ class ACPDetailsSerializer(serializers.ModelSerializer):
         data['contactEmail'] = data.pop('contact_email')
         data['URL'] = data.pop('registration_url')
 
+        data['accreditationStatus'] = data.pop('accreditation_status')
+
         data['ServerCertificates'] = instance.valid_certificates['client']
         data['ClientCertificates'] = instance.valid_certificates['server']
         return data
@@ -35,7 +37,7 @@ class AccessPointDetailsSerializer(serializers.ModelSerializer):
         model = AccreditedParty
         fields = (
             'service_provider_id', 'trading_name', 'contact_email',
-            'registration_url', 'dcp_host', 'created'
+            'registration_url', 'dcp_host', 'created', 'accreditation_status'
         )
 
     def to_representation(self, instance):
@@ -45,6 +47,8 @@ class AccessPointDetailsSerializer(serializers.ModelSerializer):
         data['contactEmail'] = data.pop('contact_email')
         data['URL'] = data.pop('registration_url')
         data['dcpHost'] = data.pop('dcp_host')
+        data['accreditationStatus'] = data.pop('accreditation_status')
+
         data['ServerCertificates'] = instance.valid_certificates['client']
         data['ClientCertificates'] = instance.valid_certificates['server']
         return data
