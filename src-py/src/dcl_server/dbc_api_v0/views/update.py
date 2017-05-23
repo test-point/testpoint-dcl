@@ -230,7 +230,8 @@ class UpdateDeleteDclRecordView(generics.UpdateAPIView, generics.DestroyAPIView)
         user_auth = getattr(request, 'auth', {}) or {}
         parties = user_auth.get('accredited_parties', [])
 
-        for party in parties:
+        for party_id in parties:
+            party = AccreditedParty.objects.get(id=party_id)
             last_token = DclRecordUpdateToken.objects.filter(
                 participant_id=participant_id
             ).order_by('-id').first()
