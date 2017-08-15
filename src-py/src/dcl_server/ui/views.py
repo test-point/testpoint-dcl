@@ -1,4 +1,5 @@
-# from braces.views import LoginRequiredMixin
+import logging
+
 from django.contrib import messages
 from django.conf import settings
 from django.views.generic import TemplateView
@@ -8,6 +9,8 @@ from dcl_server.backends.generic import update_dcl_record, clear_dcl_record
 from dcl_server.oasis.utils import get_hash
 from dcl_server.ausdigital_api_v0.authentication import get_participant_ids_for_auth
 from dcl_server.dcl_audit.models import DclRecordUpdateToken
+
+logger = logging.getLogger(__name__)
 
 
 class ParticipantRequiredMixin(object):
@@ -60,8 +63,17 @@ class IndexUiView(ParticipantRequiredMixin, TemplateView):
 
             new_dcp_value = request.POST.get('new_dcp_value', '').strip()
             if new_dcp_value:
-                update_dcl_record(participant_id, new_dcp_value)
-                messages.success(request, 'The value update has been scheduled')
+                try:
+                    update_dcl_record(participant_id, new_dcp_value)
+                except Exception as e:
+                    logger.exception(e)
+                    messages.success(
+                        request,
+                        'Error updating the record: Please check out input parameters. '
+                        'We are notified anyway.'
+                    )
+                else:
+                    messages.success(request, 'The value update has been scheduled')
             else:
                 result = clear_dcl_record(participant_id)
                 if result is True:
