@@ -1,5 +1,7 @@
 # The Ausdigital Digital Capability Locator reference implementation and test suite
 
+[![Build Status](https://travis-ci.org/test-point/testpoint-dcl.svg?branch=master)](https://travis-ci.org/test-point/testpoint-dcl)
+
 See specification at https://github.com/ausdigital/ausdigital-dcl
 
 See demo installation at https://dcl.testpoint.io/

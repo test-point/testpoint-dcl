@@ -16,12 +16,15 @@ export DCL_DRFOIDC_ENDPOINTS_CONF="simguard;http://127.0.0.1:7500;http://127.0.0
 export DCL_DB_ENGINE="django.db.backends.sqlite3"
 export DCL_DB_NAME="::memory::"
 
-source .venv/bin/activate
+source .venv/bin/activate || true
 cd src
 
 # standard run without custom reports
-py.test --cov=dcl_server --cov-report html $@ || true
+# --cov=dcl_server --cov-report html
+py.test $@ || exit 1
 # add --spec  for nice output, which is already can be considered a report
 cd ..
 
-deactivate
+deactivate || true
+
+exit 0
