@@ -5,3 +5,4 @@ python:
 install: "cd src-py && pip install -r requirements/base.txt  -r requirements/test.txt"
 # command to run tests
 script: "./pytest.sh"
+
