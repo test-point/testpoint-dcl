@@ -1,7 +1,7 @@
 # Tests requirements
 # for local usage only, pointless to use on zappa or prod deployment
-pytest
-pytest-django
-mock
-factory-boy
-pytest-cov
+pytest==3.6.3
+pytest-django==3.3.2
+mock==2.0.0
+factory-boy==2.11.1
+pytest-cov==2.5.1

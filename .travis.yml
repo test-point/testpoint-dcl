@@ -4,5 +4,5 @@ python:
 # command to install dependencies
 install: "cd src-py && pip install -r requirements/base.txt  -r requirements/test.txt"
 # command to run tests
-script: "./pytest.sh"
-
+script: "cd src && DCL_SECRET_KEY=noneed DJANGO_SETTINGS_MODULE='dcl_server.settings' DCL_DB_ENGINE=django.db.backends.sqlite3 DCL_DB_NAME='::memory::' py.test
+"

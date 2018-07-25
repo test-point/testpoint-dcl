@@ -9,5 +9,5 @@ src/deploy.sh
 src/zappa_settings.json
 var/
 *.sqlite
-
+.pytest_cache
 
