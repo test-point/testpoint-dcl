@@ -1,11 +1,11 @@
 # DCL server
 
-Our implementation of a DNS based capability lookup. The central directory.
+Our implementation of a DNS based capability lookup. The central directory. Feel free to contact us at https://chat.ausdigital.org/ if you are having any problems.
 
 
 ## About
 
-This is a Web Service providing ability to update your NAPTR record in configurable backends (AWS Route53 currently implemented). It's designed to be run behind an HTTPS reverse proxy.
+This is a Web Service providing ability to update your NAPTR record in configurable backends (AWS Route53 currently implemented). It's designed to be run behind an HTTPS reverse proxy for extra security, but no need of such complications for demo/development purposes.
 
 Provided with a target hostname, it sets standard record for given participant ID.
 
@@ -23,34 +23,50 @@ You need some external resources to get it working:
 
 ### Local deployment
 
-Instructions for starting this at *nix machine. Not tested on Windows but should work with perhaps only minor modifications.
+Instructions for starting this at `*nix` machine. Not tested on Windows but should work with perhaps only minor modifications.
 
 
-#### *nix-based OS
+#### Unix-based OS (Linux, Macos)
 
 0. Make sure you have requirements installed:
 
-    python2.7 (latest stable tested)
+    python2.7 (latest stable tested) - python3 is not supported yet!
     virtualenv
 
-1. copy any manage.sh.sample to manage.sh and runserver.sh.sample to runserver.sh
-    1.1 open manage.sh and fix variables, e.g. your AWS credentials.
-    1.2. you might need to create the postgres database; or just uncomment and use sqlite section.
+1. copy `manage.sh.sample` file to `manage.sh`
+    1.1 open `manage.sh` and update variables content, e.g. your AWS credentials and IDP keys/secrets
+    1.2. configure the database. For real usage it's advised to use postgres, for local/demo it's enough to leave default SQLite values.
 
-2. `./manage.sh check
+2. `./manage.sh check`
     Expected: `System check identified no issues (0 silenced).`
     Some warnings are not good, but okay.
 
 3. `./manage.sh migrate`
-   No errors expected.
+   No errors expected, some output about tables creation will be given.
 
-4. `./manage.sh createsuperuser`
+4. `./manage.sh createsuperuser` - optional.
 
-To run the development server please use `./runsever.sh`
+To run the development server please use `./manage.sh runserver`
 
-Expected result: some console output and url to navigate, 127.0.0.1.
+Expected result: some console output and url to navigate. Url is going be look like `http://127.0.0.1:8000`. Now you must ensure that you use exactly the same IP and port as your `manage.sh` file `DCL_HOSTNAME` setting.
 
-Expected result after navigating the given url: dcl.testpoint.io analogue - blue website.
+Expected result after navigating the given url: dcl.testpoint.io analogue - blue website, which will redirect you to the IDP login page, which will ask you for some IDP username/password (check idp.testpoint.io for details about user creation). Then it will ask you for authorisation - to allow your fresh DCL installation to see base details about that IDP user (as typical social auth works). And then you'll be redirected back to your DCL installation, where the blue website will be serving you.
+
+
+#### IDP configuration
+
+You need some IDP to be configured and accepting auth requests from your fresh DCL service. Please feel free to use idp.testpoint.io. To configure it:
+
+* navigate to idp.testpoint.io and find the login link
+* login using github
+* go to "RP (relaying parties)" section
+* create some RP:
+  * leave client type "Confidential"
+  * Response type: "code" (there are variants, but "code" is a safe choice)
+  * leave `JWT Algorithm` intact, RS256 suits the best
+  * Redirect URIs: add lines like `http://127.0.0.1:8000/oidc/authz/` for each domain which you are about to use. In simple local development case only this line is enough.
+
+If you are getting error `Redirect URI Error The request fails due to a missing, invalid, or mismatching redirection URI (redirect_uri).` then your local DCL installation sends some wrong url to the IDP. Please find which one (get the value of the parameter redirect_uri to the page where you see that error) and update "Redirect URIs" field on IDP accordingly.
 
 
 ### Zappa

@@ -1,6 +1,10 @@
 #!/bin/bash
 # for more settings check src/dcl_server/settings/*.py
 
+# be very careful about the domain name, because each slash or no-slash, or any different
+# character will be considered a new url/domain and IDP may not accept it.
+# including 127.0.0.1 and localhost - they are different domains
+export DCL_HOSTNAME="http://localhost:8000"
 export DCL_DEBUG="True"
 export DCL_SECRET_KEY="notsosecret"
 
