@@ -30,4 +30,4 @@ django-constance[database]==2.2.0
 # Docker
 gevent==1.2.1
 gunicorn==19.7.1
-eventlet==0.23.0
+eventlet==0.31.0
