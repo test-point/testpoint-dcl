@@ -7,7 +7,7 @@ django-crispy-forms==1.7.2
 # openid connect
 git+https://github.com/test-point/django-oidc.git
 # becase by default it's old version which has bug in it
-oic==0.9.5.0
+oic==1.2.1
 
 # Settings and deployment
 envparse==0.2.0
